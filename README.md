@@ -150,5 +150,3 @@ This widget is not affiliated with Hyperliquid. Use at your own risk. Always ver
 
 ---
 
-**If you found this useful, consider starring the repo!**
-
