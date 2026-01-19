@@ -1,134 +1,315 @@
 // HYPE/USDC Spot Price Widget for Hyperliquid
 
+// ============================================================================
+// Configuration
+// ============================================================================
+
+// Trading pair identifiers
 var SPOT_PAIRS = {
   'HYPE': '@107',
   'PURR': 'PURR/USDC'
 };
 
+// Color palette
 var COLORS = {
-  bg: new Color('#0d0d0d'),
-  card: new Color('#1a1a1a'),
-  green: new Color('#00ff88'),
-  red: new Color('#ff4d4d'),
-  white: new Color('#ffffff'),
-  gray: new Color('#888888')
+  'bg': new Color('#E5E7EB'),
+  'card': new Color('#FFFFFF'),
+  'green': new Color('#059669'),
+  'red': new Color('#DC2626'),
+  'text': new Color('#1F2937'),
+  'accent': new Color('#E5E7EB'),
+  'purple': new Color('#6366F1'),
+  'black': new Color('#111827')
 };
 
+// Custom image configuration
+var CUSTOM_IMAGE_URL = null;
+var CUSTOM_IMAGE_LOCAL = null;
+
+// Layout options
+var USE_GRADIENT_BG = false;
+var USE_CARD_LAYOUT = true;
+
+// API configuration
+var API_BASE_URL = 'https://api.hyperliquid.xyz/info';
+var HYPE_PAIR_ID = '@107';
+var MILLISECONDS_PER_DAY = 86400000;
+
+// Widget styling constants
+var CARD_CORNER_RADIUS = 16;
+var CARD_PADDING = 16;
+var WIDGET_PADDING = 12;
+var CONTENT_SPACING = 8;
+
+// ============================================================================
+// API Functions
+// ============================================================================
+
+/**
+ * Fetches current spot prices from Hyperliquid API
+ * @returns {Object|null} Price data object or null on error
+ */
 async function getSpotPrice() {
-  var req = new Request('https://api.hyperliquid.xyz/info');
-  req.method = 'POST';
-  req.headers = { 'Content-Type': 'application/json' };
-  req.body = JSON.stringify({ type: 'allMids' });
+  var request = new Request(API_BASE_URL);
+  request.method = 'POST';
+  request.headers = { 'Content-Type': 'application/json' };
+  request.body = JSON.stringify({ type: 'allMids' });
+  
   try {
-    var res = await req.loadJSON();
-    return res;
-  } catch (e) {
+    var response = await request.loadJSON();
+    return response;
+  } catch (error) {
+    console.log('Failed to fetch spot prices: ' + error);
     return null;
   }
 }
 
+/**
+ * Calculates 24-hour price change percentage
+ * @returns {number|null} Percentage change or null on error
+ */
 async function get24hChange() {
-  var req = new Request('https://api.hyperliquid.xyz/info');
-  req.method = 'POST';
-  req.headers = { 'Content-Type': 'application/json' };
-  req.body = JSON.stringify({
+  var now = Date.now();
+  var oneDayAgo = now - MILLISECONDS_PER_DAY;
+  
+  var request = new Request(API_BASE_URL);
+  request.method = 'POST';
+  request.headers = { 'Content-Type': 'application/json' };
+  request.body = JSON.stringify({
     type: 'candleSnapshot',
     req: {
-      coin: '@107',
+      coin: HYPE_PAIR_ID,
       interval: '1d',
-      startTime: Date.now() - 86400000,
-      endTime: Date.now()
+      startTime: oneDayAgo,
+      endTime: now
     }
   });
+  
   try {
-    var candles = await req.loadJSON();
-    if (candles && candles.length > 0) {
-      var c = candles[candles.length - 1];
-      var open = parseFloat(c.o);
-      var close = parseFloat(c.c);
-      return ((close - open) / open) * 100;
+    var candles = await request.loadJSON();
+    if (!candles || candles.length === 0) {
+      return null;
     }
-  } catch (e) {
+    
+    var latestCandle = candles[candles.length - 1];
+    var openPrice = parseFloat(latestCandle.o);
+    var closePrice = parseFloat(latestCandle.c);
+    
+    if (isNaN(openPrice) || isNaN(closePrice) || openPrice === 0) {
+      return null;
+    }
+    
+    var changePercent = ((closePrice - openPrice) / openPrice) * 100;
+    return changePercent;
+  } catch (error) {
+    console.log('Failed to fetch 24h change: ' + error);
     return null;
   }
+}
+
+// ============================================================================
+// Image Loading
+// ============================================================================
+
+/**
+ * Attempts to load custom image from URL or local file
+ * @returns {Image|null} Image object or null if not found
+ */
+async function loadCustomImage() {
+  // Try remote URL first
+  if (CUSTOM_IMAGE_URL) {
+    try {
+      var request = new Request(CUSTOM_IMAGE_URL);
+      var image = await request.loadImage();
+      if (image) {
+        return image;
+      }
+    } catch (error) {
+      console.log('Failed to load image from URL: ' + error);
+    }
+  }
+  
+  // Try local file
+  if (CUSTOM_IMAGE_LOCAL) {
+    try {
+      var fileManager = FileManager.iCloud();
+      var imagePath = fileManager.joinPath(
+        fileManager.documentsDirectory(),
+        CUSTOM_IMAGE_LOCAL
+      );
+      
+      if (fileManager.fileExists(imagePath)) {
+        var image = fileManager.readImage(imagePath);
+        if (image) {
+          return image;
+        }
+      }
+    } catch (error) {
+      console.log('Failed to load local image: ' + error);
+    }
+  }
+  
   return null;
 }
 
-async function buildWidget(price, change) {
-  var w = new ListWidget();
-  w.backgroundColor = COLORS.bg;
-  w.setPadding(16, 16, 16, 16);
-  
-  // Header
-  var header = w.addStack();
-  header.layoutHorizontally();
-  header.centerAlignContent();
-  
-  var logo = header.addText('HYPERLIQUID');
-  logo.font = Font.boldSystemFont(10);
-  logo.textColor = COLORS.green;
-  
-  header.addSpacer();
-  
-  var spot = header.addText('SPOT');
-  spot.font = Font.boldSystemFont(8);
-  spot.textColor = COLORS.gray;
-  
-  w.addSpacer(12);
-  
-  // Pair name
-  var pair = w.addText('HYPE/USDC');
-  pair.font = Font.boldSystemFont(18);
-  pair.textColor = COLORS.white;
-  
-  w.addSpacer(4);
-  
-  // Price
-  var priceStr = price ? ('$' + parseFloat(price).toFixed(4)) : 'N/A';
-  var priceText = w.addText(priceStr);
-  priceText.font = Font.boldSystemFont(28);
-  priceText.textColor = COLORS.white;
-  
-  w.addSpacer(4);
-  
-  // 24h change
-  if (change !== null) {
-    var sign = change >= 0 ? '+' : '';
-    var changeStr = sign + change.toFixed(2) + '% (24h)';
-    var changeText = w.addText(changeStr);
-    changeText.font = Font.semiboldSystemFont(14);
-    changeText.textColor = change >= 0 ? COLORS.green : COLORS.red;
+// ============================================================================
+// Widget Building
+// ============================================================================
+
+/**
+ * Formats price string with dollar sign and 4 decimal places
+ * @param {number|null} price - Price value
+ * @returns {string} Formatted price string
+ */
+function formatPrice(price) {
+  if (price === null || price === undefined || isNaN(price)) {
+    return 'N/A';
   }
-  
-  w.addSpacer();
-  
-  // Updated time
+  return '$' + parseFloat(price).toFixed(4);
+}
+
+/**
+ * Formats 24h change percentage with sign
+ * @param {number} change - Percentage change value
+ * @returns {string} Formatted change string
+ */
+function formatChange(change) {
+  var sign = change >= 0 ? '+' : '';
+  return sign + change.toFixed(2) + '% (24h)';
+}
+
+/**
+ * Formats current time as HH:MM
+ * @returns {string} Formatted time string
+ */
+function formatUpdateTime() {
   var now = new Date();
-  var timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-  var timeText = w.addText('Updated ' + timeStr);
-  timeText.font = Font.systemFont(9);
-  timeText.textColor = COLORS.gray;
-  
-  return w;
+  return now.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 }
 
+/**
+ * Creates error widget for display when something goes wrong
+ * @param {string} message - Error message to display
+ * @returns {ListWidget} Error widget
+ */
+function createErrorWidget(message) {
+  var widget = new ListWidget();
+  widget.backgroundColor = COLORS.bg;
+  widget.setPadding(CARD_PADDING, CARD_PADDING, CARD_PADDING, CARD_PADDING);
+  
+  var errorText = widget.addText(message);
+  errorText.textColor = COLORS.text;
+  errorText.font = Font.regularSystemFont(12);
+  
+  return widget;
+}
+
+/**
+ * Builds the main widget with price and change data
+ * @param {number|null} price - Current price
+ * @param {number|null} change - 24h change percentage
+ * @returns {ListWidget} Configured widget
+ */
+async function buildWidget(price, change) {
+  try {
+    var widget = new ListWidget();
+    widget.backgroundColor = COLORS.bg;
+    widget.setPadding(WIDGET_PADDING, WIDGET_PADDING, WIDGET_PADDING, WIDGET_PADDING);
+    
+    // Create card container
+    var cardContainer = widget.addStack();
+    cardContainer.backgroundColor = COLORS.card;
+    cardContainer.cornerRadius = CARD_CORNER_RADIUS;
+    cardContainer.setPadding(
+      CARD_PADDING,
+      CARD_PADDING,
+      CARD_PADDING,
+      CARD_PADDING
+    );
+    
+    // Main content stack
+    var contentStack = cardContainer.addStack();
+    contentStack.layoutVertically();
+    contentStack.spacing = CONTENT_SPACING;
+    
+    // Trading pair label
+    var pairLabel = contentStack.addText('HYPE/USDC');
+    pairLabel.font = Font.semiboldSystemFont(14);
+    pairLabel.textColor = COLORS.text;
+    
+    // Price display
+    var priceText = contentStack.addText(formatPrice(price));
+    priceText.font = Font.boldSystemFont(24);
+    priceText.textColor = COLORS.purple;
+    
+    // 24h change display
+    if (change !== null && !isNaN(change)) {
+      var changeText = contentStack.addText(formatChange(change));
+      changeText.font = Font.semiboldSystemFont(11);
+      changeText.textColor = change >= 0 ? COLORS.green : COLORS.red;
+    }
+    
+    // Update timestamp
+    contentStack.addSpacer(4);
+    var timeLabel = contentStack.addText('Updated ' + formatUpdateTime());
+    timeLabel.font = Font.regularSystemFont(9);
+    timeLabel.textColor = COLORS.black;
+    
+    return widget;
+  } catch (error) {
+    console.log('Error building widget: ' + error);
+    return createErrorWidget('Error loading widget');
+  }
+}
+
+// ============================================================================
+// Main Execution
+// ============================================================================
+
+/**
+ * Main function that orchestrates data fetching and widget creation
+ */
 async function main() {
-  var prices = await getSpotPrice();
-  var change = await get24hChange();
-  
-  var hypePrice = null;
-  if (prices && prices['@107']) {
-    hypePrice = prices['@107'];
+  try {
+    // Fetch data (Scriptable may not support Promise.all, so fetch sequentially)
+    var prices = await getSpotPrice();
+    var change = await get24hChange();
+    
+    // Extract HYPE price
+    var hypePrice = null;
+    if (prices && prices[HYPE_PAIR_ID]) {
+      hypePrice = prices[HYPE_PAIR_ID];
+    }
+    
+    // Build and display widget
+    var widget = await buildWidget(hypePrice, change);
+    
+    // Present widget based on context
+    var isWidgetContext = typeof config !== 'undefined' && config.runsInWidget;
+    if (isWidgetContext) {
+      Script.setWidget(widget);
+    } else {
+      await widget.presentSmall();
+    }
+    
+    Script.complete();
+  } catch (error) {
+    console.log('Fatal error: ' + error);
+    var errorWidget = createErrorWidget('Error: ' + error.message);
+    
+    var isWidgetContext = typeof config !== 'undefined' && config.runsInWidget;
+    if (isWidgetContext) {
+      Script.setWidget(errorWidget);
+    } else {
+      await errorWidget.presentSmall();
+    }
+    
+    Script.complete();
   }
-  
-  var widget = await buildWidget(hypePrice, change);
-  
-  if (config.runsInWidget) {
-    Script.setWidget(widget);
-  } else {
-    widget.presentSmall();
-  }
-  Script.complete();
 }
 
+// Run main function
 main();
