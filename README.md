@@ -6,7 +6,7 @@ An iOS widget that displays real-time HYPE/USDC spot prices from Hyperliquid's L
 
 ## Overview
 
-This widget connects directly to Hyperliquid's public API to fetch and display the current spot price for HYPE/USDC. The design features a clean, minimal interface with a rounded card layout that fits naturally on your home screen.
+This widget connects directly to Hyperliquid's public API to fetch and display the current spot price for HYPE/USDC. The design features a clean, minimal interface with a white rounded card on a darker background that fits naturally on your home screen.
 
 The widget updates automatically according to iOS scheduling (typically every 15 minutes), and you can manually refresh by opening the script in Scriptable. All data is fetched from public endpoints with no authentication required.
 
@@ -65,21 +65,23 @@ The widget is highly customizable through variables defined at the top of the sc
 The color palette is defined in the `COLORS` object. Each color serves a specific purpose:
 
 ```javascript
-var COLORS = {};
-COLORS['bg'] = new Color('#E5E7EB');      // Outer background color
-COLORS['card'] = new Color('#FFFFFF');    // Card background (white)
-COLORS['green'] = new Color('#059669');   // Positive change indicator
-COLORS['red'] = new Color('#DC2626');    // Negative change indicator
-COLORS['text'] = new Color('#1F2937');    // Primary text color
-COLORS['purple'] = new Color('#6366F1');  // Price text color
-COLORS['black'] = new Color('#111827');   // Timestamp text color
+var COLORS = {
+  'bg': new Color('#544C4A'),           // Brownish dark gray background
+  'card': new Color('#FFFFFF'),         // White card
+  'green': new Color('#059669'),         // Green for positive changes
+  'red': new Color('#DC2626'),          // Red for negative changes
+  'text': new Color('#D3D3D3'),         // Light gray text
+  'accent': new Color('#E5E7EB'),       // Light gray accent
+  'price': new Color('#544C4A'),         // Brownish dark gray for price
+  'secondary': new Color('#D3D3D3')     // Light gray for secondary text
+};
 ```
 
-Adjust these hex values to match your preferred color scheme. The current palette uses darker, more saturated colors for better visibility against the white card background.
+Adjust these hex values to match your preferred color scheme. The current palette uses a brownish dark gray background with light gray text for good contrast and readability.
 
 ### Custom Logo or Image
 
-You can add your own logo or branding image to the widget. There are two methods:
+The widget supports custom images for branding, though this feature is currently not visible in the default layout. You can configure it for future use:
 
 **Method 1: Remote Image URL**
 
@@ -89,20 +91,15 @@ Set the `CUSTOM_IMAGE_URL` variable to point to an image hosted online:
 var CUSTOM_IMAGE_URL = 'https://your-domain.com/logo.png';
 ```
 
-The widget will attempt to load this image when it renders. Make sure the URL is publicly accessible and the image format is supported (PNG, JPEG, etc.).
-
 **Method 2: Local Image File**
 
-If you prefer to use a local image file:
-
-1. Save your image file to Scriptable's iCloud folder (accessible through the Files app)
-2. Set the `CUSTOM_IMAGE_LOCAL` variable to the filename:
+Set the `CUSTOM_IMAGE_LOCAL` variable to a filename in Scriptable's iCloud folder:
 
 ```javascript
 var CUSTOM_IMAGE_LOCAL = 'logo.png';
 ```
 
-The widget will look for this file in Scriptable's document directory. If the image can't be loaded for any reason, the widget falls back to displaying text.
+Save your image file to Scriptable's iCloud folder (accessible through the Files app). The widget will attempt to load the image if configured, falling back gracefully if the image cannot be loaded.
 
 ### Layout Options
 
@@ -119,13 +116,19 @@ The card layout wraps all content in a white rounded rectangle with padding. The
 
 While this widget is configured for HYPE/USDC, you can modify it to track other spot pairs on Hyperliquid. The key is finding the correct identifier for your desired pair.
 
+The configuration is defined at the top of the script:
+
+```javascript
+var HYPE_PAIR_ID = '@107';
+```
+
 HYPE/USDC uses the identifier `@107` on mainnet. To find other pairs:
 
 1. Check Hyperliquid's spot metadata endpoint
 2. Look for the index number associated with your desired trading pair
-3. Replace `@107` in the script with the appropriate identifier
+3. Replace the `HYPE_PAIR_ID` value in the script with the appropriate identifier
 
-Some pairs may use different formats. For example, PURR/USDC uses the string identifier `PURR/USDC` rather than an index-based format.
+Some pairs may use different formats. For example, PURR/USDC uses the string identifier `PURR/USDC` rather than an index-based format. You'll also need to update the `SPOT_PAIRS` object if you want to track multiple pairs.
 
 ## How It Works
 
@@ -239,7 +242,7 @@ If colors appear wrong or hard to read:
 
 - Check that the hex color values are properly formatted
 - Ensure there's sufficient contrast between text and background colors
-- The current palette is optimized for visibility on white backgrounds
+- The current palette uses a brownish dark gray background with light gray text for optimal contrast
 
 ## File Structure
 
@@ -253,7 +256,7 @@ The project consists of a few key files:
 └── LICENSE          # MIT License
 ```
 
-The main script file contains all the widget logic, API calls, and rendering code. Everything is contained in a single file for easy distribution and modification.
+The main script file contains all the widget logic, API calls, and rendering code. The code is organized into clear sections: configuration constants, API functions, image loading utilities, widget building functions, and main execution. Everything is contained in a single file for easy distribution and modification.
 
 ## Contributing
 
