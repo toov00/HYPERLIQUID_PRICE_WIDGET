@@ -12,14 +12,14 @@ var SPOT_PAIRS = {
 
 // Color palette
 var COLORS = {
-  'bg': new Color('#E5E7EB'),
-  'card': new Color('#FFFFFF'),
-  'green': new Color('#059669'),
-  'red': new Color('#DC2626'),
-  'text': new Color('#1F2937'),
-  'accent': new Color('#E5E7EB'),
-  'purple': new Color('#6366F1'),
-  'black': new Color('#111827')
+  'bg': new Color('#544C4A'),           // Brownish dark gray background
+  'card': new Color('#FFFFFF'),         // White card
+  'green': new Color('#059669'),         // Green for positive changes
+  'red': new Color('#DC2626'),          // Red for negative changes
+  'text': new Color('#D3D3D3'),         // Light gray text
+  'accent': new Color('#E5E7EB'),       // Light gray accent
+  'price': new Color('#544C4A'),         // Brownish dark gray for price
+  'secondary': new Color('#D3D3D3')     // Light gray for secondary text
 };
 
 // Custom image configuration
@@ -243,7 +243,7 @@ async function buildWidget(price, change) {
     // Price display
     var priceText = contentStack.addText(formatPrice(price));
     priceText.font = Font.boldSystemFont(24);
-    priceText.textColor = COLORS.purple;
+    priceText.textColor = COLORS.price;
     
     // 24h change display
     if (change !== null && !isNaN(change)) {
@@ -256,7 +256,7 @@ async function buildWidget(price, change) {
     contentStack.addSpacer(4);
     var timeLabel = contentStack.addText('Updated ' + formatUpdateTime());
     timeLabel.font = Font.regularSystemFont(9);
-    timeLabel.textColor = COLORS.black;
+    timeLabel.textColor = COLORS.secondary;
     
     return widget;
   } catch (error) {
