@@ -130,50 +130,6 @@ HYPE/USDC uses the identifier `@107` on mainnet. To find other pairs:
 
 Some pairs may use different formats. For example, PURR/USDC uses the string identifier `PURR/USDC` rather than an index-based format. You'll also need to update the `SPOT_PAIRS` object if you want to track multiple pairs.
 
-## How It Works
-
-The widget operates by making HTTP requests to Hyperliquid's public Info API. No authentication or API keys are required.
-
-### API Endpoints
-
-The widget uses two endpoints:
-
-**Current Spot Prices**
-
-```
-POST https://api.hyperliquid.xyz/info
-Body: { "type": "allMids" }
-```
-
-This returns a mapping of all current spot prices. HYPE/USDC is accessed via the `@107` key in the response.
-
-**24-Hour Price Data**
-
-```
-POST https://api.hyperliquid.xyz/info
-Body: {
-  "type": "candleSnapshot",
-  "req": {
-    "coin": "@107",
-    "interval": "1d",
-    "startTime": <timestamp>,
-    "endTime": <timestamp>
-  }
-}
-```
-
-This returns candle data used to calculate the 24-hour price change percentage.
-
-### Data Flow
-
-1. When the widget needs to update, it makes both API requests
-2. The current price is extracted from the `allMids` response
-3. The 24-hour change is calculated by comparing the open and close prices from the candle data
-4. The widget renders this information in the configured layout
-5. iOS handles the scheduling of updates (typically every 15 minutes)
-
-All network requests use HTTPS and the widget only reads data. It cannot modify anything on Hyperliquid or access any private information.
-
 ## Limitations
 
 There are a few important limitations to be aware of:
@@ -193,19 +149,6 @@ You can manually refresh the widget by opening the script in Scriptable and runn
 **Network Dependency**
 
 The widget requires an active internet connection to fetch data. If you're offline, it will display "N/A" for the price.
-
-## Security and Privacy
-
-This widget is designed with security and privacy in mind:
-
-- No wallet connections or private key access
-- No authentication required (uses public endpoints only)
-- No API keys or credentials stored
-- Read-only operations (cannot execute trades or modify data)
-- All communication over HTTPS
-- No data collection or tracking
-
-The widget only fetches publicly available price information. It cannot access your funds, execute trades, or interact with your Hyperliquid account in any way.
 
 ## Troubleshooting
 
