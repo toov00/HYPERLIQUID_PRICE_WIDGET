@@ -2,7 +2,7 @@
 
 An iOS widget that displays real-time HYPE/USDC spot prices from Hyperliquid's Layer 1. Built with Scriptable for easy customization and deployment.
 
-![Widget Preview](preview.png)
+<img src="preview.png" width="200px">
 
 ## Overview
 
@@ -273,9 +273,9 @@ When contributing:
 
 For more information about the technologies and services used:
 
-- [Hyperliquid API Documentation](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api) - Complete API reference
-- [Scriptable Documentation](https://docs.scriptable.app/) - Scriptable API and widget development guide
-- [Hyperliquid Web App](https://app.hyperliquid.xyz/) - Official Hyperliquid trading interface
+- [Hyperliquid API Documentation](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api): Complete API reference
+- [Scriptable Documentation](https://docs.scriptable.app/): Scriptable API and widget development guide
+- [Hyperliquid Web App](https://app.hyperliquid.xyz/): Official Hyperliquid trading interface
 
 ## License
 
