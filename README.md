@@ -27,7 +27,7 @@ The widget updates automatically according to iOS scheduling (typically every 15
 4. Tap the script name to rename it (e.g., "HYPE Price")
 5. Tap Done to save
 
-### Adding to Home Screen
+**Adding to Home Screen:**
 
 1. Long-press on your home screen to enter edit mode
 2. Tap the plus button in the top left corner
