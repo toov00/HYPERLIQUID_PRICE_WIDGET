@@ -49,7 +49,7 @@ The widget displays the current HYPE/USDC spot price, 24-hour change percentage,
 
 The widget is highly customizable through variables defined at the top of the script file. You can modify colors, enable or disable features, and configure custom branding.
 
-### 1. Color Customization
+**1. Color Customization**
 
 The color palette is defined in the `COLORS` object at the top of the script:
 
@@ -68,17 +68,17 @@ var COLORS = {
 
 Adjust these hex values to match your preferred color scheme.
 
-### 2. Custom Logo or Image
+**2. Custom Logo or Image**
 
 The widget supports custom images for branding. Configure it using one of these methods:
 
-**Method 1: Remote Image URL**
+Method 1: Remote Image URL
 
 ```javascript
 var CUSTOM_IMAGE_URL = 'https://your-domain.com/logo.png';
 ```
 
-**Method 2: Local Image File**
+Method 2: Local Image File
 
 ```javascript
 var CUSTOM_IMAGE_LOCAL = 'logo.png';
@@ -86,7 +86,7 @@ var CUSTOM_IMAGE_LOCAL = 'logo.png';
 
 Save your image file to Scriptable's iCloud folder (accessible through the Files app). The widget will attempt to load the image if configured, falling back gracefully if the image cannot be loaded.
 
-### 3. Layout Options
+**3. Layout Options**
 
 ```javascript
 var USE_GRADIENT_BG = false;  // Set to true for gradient backgrounds
@@ -95,7 +95,7 @@ var USE_CARD_LAYOUT = true;   // Card layout is currently enabled
 
 The card layout wraps all content in a white rounded rectangle with padding. The gradient background option is available but currently disabled in favor of a solid background color.
 
-### 4. Tracking Other Spot Pairs
+**4. Tracking Other Spot Pairs**
 
 While this widget is configured for HYPE/USDC, you can modify it to track other spot pairs on Hyperliquid:
 
