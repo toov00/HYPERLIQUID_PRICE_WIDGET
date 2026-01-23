@@ -105,25 +105,25 @@ Some pairs may use different formats. For example, PURR/USDC uses the string ide
 
 ## Limitations
 
-**Update Frequency**
+**1. Update Frequency**
 
 iOS controls when widgets refresh. The system typically updates widgets every 15 minutes or so, but this isn't guaranteed. You can't force more frequent updates from within the widget itself.
 
-**No Real-Time Updates**
+**2. No Real-Time Updates**
 
 This is an iOS limitation, not a limitation of the widget code. For truly real-time price data, you'd need to use the Hyperliquid web app or mobile app directly.
 
-**Manual Refresh**
+**3. Manual Refresh**
 
 You can manually refresh the widget by opening the script in Scriptable and running it. This bypasses iOS scheduling and fetches fresh data immediately.
 
-**Network Dependency**
+**4. Network Dependency**
 
 The widget requires an active internet connection to fetch data. If you're offline, it will display "N/A" for the price.
 
 ## Troubleshooting
 
-**Widget Shows "N/A" for Price**
+**5. Widget Shows "N/A" for Price**
 
 This usually means the widget couldn't fetch data from the API. Common causes:
 - No internet connection
@@ -132,14 +132,14 @@ This usually means the widget couldn't fetch data from the API. Common causes:
 
 Try running the script directly in Scriptable to see if there are any error messages. Check your internet connection and try again.
 
-**Widget Not Updating**
+**6. Widget Not Updating**
 
 iOS controls widget refresh timing. If your widget seems stale:
 - Wait for the next automatic refresh (can take 15+ minutes)
 - Manually refresh by opening the script in Scriptable
 - Remove and re-add the widget to force a refresh
 
-**Syntax Errors When Pasting Code**
+**7. Syntax Errors When Pasting Code**
 
 If you encounter syntax errors:
 - Make sure you're copying the entire file contents
@@ -147,7 +147,7 @@ If you encounter syntax errors:
 - Check for any hidden formatting characters that might have been copied
 - Verify the file encoding is correct
 
-**Colors Not Displaying Correctly**
+**8. Colors Not Displaying Correctly**
 
 If colors appear wrong or hard to read:
 - Check that the hex color values are properly formatted
