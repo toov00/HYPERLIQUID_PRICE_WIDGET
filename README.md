@@ -4,47 +4,30 @@ An iOS widget that displays real-time HYPE/USDC spot prices from Hyperliquid's L
 
 <img src="preview.png" width="200px">
 
-## Overview
+## What It Does
 
-This widget connects directly to Hyperliquid's public API to fetch and display the current spot price for HYPE/USDC. The design features a clean, minimal interface with a white rounded card on a darker background that fits naturally on your home screen.
+Connects directly to Hyperliquid's public API to fetch and display the current spot price for HYPE/USDC. The design features a clean, minimal interface with a white rounded card on a darker background that fits naturally on your home screen.
 
-The widget updates automatically according to iOS scheduling (typically every 15 minutes), and you can manually refresh by opening the script in Scriptable. All data is fetched from public endpoints with no authentication required.
-
-## Features
-
-The widget displays several key pieces of information:
-
+**Features:**
 - Current HYPE/USDC spot price with four decimal precision
 - 24-hour price change percentage with color-coded indicators (green for positive, red for negative)
 - Last update timestamp showing when the data was fetched
 - Clean card-based layout with rounded corners and subtle background contrast
+- Fully customizable colors and styling through configuration variables
 
-All styling is customizable through configuration variables at the top of the script file.
-
-## Requirements
-
-To use this widget, you need:
-
-- An iPhone running iOS 14 or later
-- The Scriptable app installed from the App Store (free)
-
-Scriptable is a third-party app that enables JavaScript-based widgets on iOS. It's available at no cost and doesn't require any subscriptions.
+The widget updates automatically according to iOS scheduling (typically every 15 minutes), and you can manually refresh by opening the script in Scriptable. All data is fetched from public endpoints with no authentication required.
 
 ## Installation
 
-### Step 1: Install Scriptable
+**Requirements:** iPhone running iOS 14+ and the Scriptable app (free from App Store)
 
-Download Scriptable from the App Store if you haven't already. The app is free and doesn't require any in-app purchases.
-
-### Step 2: Create the Script
-
-1. Open the Scriptable app
-2. Tap the plus button in the top right to create a new script
+1. Download and install Scriptable from the App Store
+2. Open Scriptable and tap the plus button to create a new script
 3. Copy the entire contents of `spot_price.js` into the script editor
-4. Tap the script name at the top to rename it (something like "HYPE Price" works well)
+4. Tap the script name to rename it (e.g., "HYPE Price")
 5. Tap Done to save
 
-### Step 3: Add to Home Screen
+### Adding to Home Screen
 
 1. Long-press on your home screen to enter edit mode
 2. Tap the plus button in the top left corner
@@ -56,13 +39,15 @@ Download Scriptable from the App Store if you haven't already. The app is free a
 
 The widget should now appear on your home screen and begin fetching data.
 
-## Configuration
+## Usage
 
-The widget is highly customizable through variables defined at the top of the script file. You can modify colors, enable or disable features, and even add custom branding.
+### Quick Start
+
+After installation, the widget will automatically update every 15 minutes or so. To manually refresh, open the script in Scriptable and run it.
 
 ### Color Customization
 
-The color palette is defined in the `COLORS` object. Each color serves a specific purpose:
+The color palette is defined in the `COLORS` object at the top of the script:
 
 ```javascript
 var COLORS = {
@@ -77,23 +62,19 @@ var COLORS = {
 };
 ```
 
-Adjust these hex values to match your preferred color scheme. The current palette uses a brownish dark gray background with light gray text for good contrast and readability.
+Adjust these hex values to match your preferred color scheme.
 
 ### Custom Logo or Image
 
-The widget supports custom images for branding, though this feature is currently not visible in the default layout. You can configure it for future use:
+The widget supports custom images for branding. Configure it using one of these methods:
 
 **Method 1: Remote Image URL**
-
-Set the `CUSTOM_IMAGE_URL` variable to point to an image hosted online:
 
 ```javascript
 var CUSTOM_IMAGE_URL = 'https://your-domain.com/logo.png';
 ```
 
 **Method 2: Local Image File**
-
-Set the `CUSTOM_IMAGE_LOCAL` variable to a filename in Scriptable's iCloud folder:
 
 ```javascript
 var CUSTOM_IMAGE_LOCAL = 'logo.png';
@@ -102,8 +83,6 @@ var CUSTOM_IMAGE_LOCAL = 'logo.png';
 Save your image file to Scriptable's iCloud folder (accessible through the Files app). The widget will attempt to load the image if configured, falling back gracefully if the image cannot be loaded.
 
 ### Layout Options
-
-The widget includes a few layout configuration options:
 
 ```javascript
 var USE_GRADIENT_BG = false;  // Set to true for gradient backgrounds
@@ -114,25 +93,17 @@ The card layout wraps all content in a white rounded rectangle with padding. The
 
 ### Tracking Other Spot Pairs
 
-While this widget is configured for HYPE/USDC, you can modify it to track other spot pairs on Hyperliquid. The key is finding the correct identifier for your desired pair.
-
-The configuration is defined at the top of the script:
+While this widget is configured for HYPE/USDC, you can modify it to track other spot pairs on Hyperliquid:
 
 ```javascript
 var HYPE_PAIR_ID = '@107';
 ```
 
-HYPE/USDC uses the identifier `@107` on mainnet. To find other pairs:
-
-1. Check Hyperliquid's spot metadata endpoint
-2. Look for the index number associated with your desired trading pair
-3. Replace the `HYPE_PAIR_ID` value in the script with the appropriate identifier
+HYPE/USDC uses the identifier `@107` on mainnet. To find other pairs, check Hyperliquid's spot metadata endpoint and look for the index number associated with your desired trading pair. Replace the `HYPE_PAIR_ID` value in the script with the appropriate identifier.
 
 Some pairs may use different formats. For example, PURR/USDC uses the string identifier `PURR/USDC` rather than an index-based format. You'll also need to update the `SPOT_PAIRS` object if you want to track multiple pairs.
 
 ## Limitations
-
-There are a few important limitations to be aware of:
 
 **Update Frequency**
 
@@ -155,7 +126,6 @@ The widget requires an active internet connection to fetch data. If you're offli
 **Widget Shows "N/A" for Price**
 
 This usually means the widget couldn't fetch data from the API. Common causes:
-
 - No internet connection
 - Hyperliquid API is temporarily unavailable
 - Network timeout
@@ -165,7 +135,6 @@ Try running the script directly in Scriptable to see if there are any error mess
 **Widget Not Updating**
 
 iOS controls widget refresh timing. If your widget seems stale:
-
 - Wait for the next automatic refresh (can take 15+ minutes)
 - Manually refresh by opening the script in Scriptable
 - Remove and re-add the widget to force a refresh
@@ -173,7 +142,6 @@ iOS controls widget refresh timing. If your widget seems stale:
 **Syntax Errors When Pasting Code**
 
 If you encounter syntax errors:
-
 - Make sure you're copying the entire file contents
 - Create a fresh script rather than editing an existing one
 - Check for any hidden formatting characters that might have been copied
@@ -182,48 +150,30 @@ If you encounter syntax errors:
 **Colors Not Displaying Correctly**
 
 If colors appear wrong or hard to read:
-
 - Check that the hex color values are properly formatted
 - Ensure there's sufficient contrast between text and background colors
 - The current palette uses a brownish dark gray background with light gray text for optimal contrast
 
-## File Structure
-
-The project consists of a few key files:
-
-```
-.
-├── spot_price.js    # Main widget script
-├── README.md        # This documentation
-├── preview.png       # Widget screenshot
-└── LICENSE          # MIT License
-```
-
-The main script file contains all the widget logic, API calls, and rendering code. The code is organized into clear sections: configuration constants, API functions, image loading utilities, widget building functions, and main execution. Everything is contained in a single file for easy distribution and modification.
-
 ## Contributing
 
-Contributions are welcome. If you find bugs, have feature suggestions, or want to improve the code, feel free to open an issue or submit a pull request.
+Contributions welcome. If you find bugs, have feature suggestions, or want to improve the code, feel free to open an issue or submit a pull request.
 
 When contributing:
-
 - Follow the existing code style
 - Test your changes in Scriptable before submitting
 - Update documentation if you add new features
 - Keep the code readable and well-commented
 
-## Resources
-
-For more information about the technologies and services used:
-
-- [Hyperliquid API Documentation](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api): Complete API reference
-- [Scriptable Documentation](https://docs.scriptable.app/): Scriptable API and widget development guide
-- [Hyperliquid Web App](https://app.hyperliquid.xyz/): Official Hyperliquid trading interface
-
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for full details.
+MIT License
 
 ## Disclaimer
 
 This widget is an independent project and is not affiliated with, endorsed by, or associated with Hyperliquid. Use at your own risk. Always verify prices and trading information on the official Hyperliquid platform before making any trading decisions. The authors and contributors are not responsible for any losses or damages resulting from the use of this widget.
+
+## Resources
+
+- [Hyperliquid API Documentation](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api): Complete API reference
+- [Scriptable Documentation](https://docs.scriptable.app/): Scriptable API and widget development guide
+- [Hyperliquid Web App](https://app.hyperliquid.xyz/): Official Hyperliquid trading interface
