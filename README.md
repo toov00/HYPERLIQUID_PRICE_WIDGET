@@ -123,7 +123,7 @@ The widget requires an active internet connection to fetch data. If you're offli
 
 ## Troubleshooting
 
-**5. Widget Shows "N/A" for Price**
+**1. Widget Shows "N/A" for Price**
 
 This usually means the widget couldn't fetch data from the API. Common causes:
 - No internet connection
@@ -132,14 +132,14 @@ This usually means the widget couldn't fetch data from the API. Common causes:
 
 Try running the script directly in Scriptable to see if there are any error messages. Check your internet connection and try again.
 
-**6. Widget Not Updating**
+**2. Widget Not Updating**
 
 iOS controls widget refresh timing. If your widget seems stale:
 - Wait for the next automatic refresh (can take 15+ minutes)
 - Manually refresh by opening the script in Scriptable
 - Remove and re-add the widget to force a refresh
 
-**7. Syntax Errors When Pasting Code**
+**3. Syntax Errors When Pasting Code**
 
 If you encounter syntax errors:
 - Make sure you're copying the entire file contents
@@ -147,7 +147,7 @@ If you encounter syntax errors:
 - Check for any hidden formatting characters that might have been copied
 - Verify the file encoding is correct
 
-**8. Colors Not Displaying Correctly**
+**4. Colors Not Displaying Correctly**
 
 If colors appear wrong or hard to read:
 - Check that the hex color values are properly formatted
