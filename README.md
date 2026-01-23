@@ -41,9 +41,13 @@ The widget should now appear on your home screen and begin fetching data.
 
 ## Usage
 
-### Quick Start
-
 After installation, the widget will automatically update every 15 minutes or so. To manually refresh, open the script in Scriptable and run it.
+
+The widget displays the current HYPE/USDC spot price, 24-hour change percentage, and last update time. All data is fetched from Hyperliquid's public API with no authentication required.
+
+## Configuration
+
+The widget is highly customizable through variables defined at the top of the script file. You can modify colors, enable or disable features, and configure custom branding.
 
 ### Color Customization
 
