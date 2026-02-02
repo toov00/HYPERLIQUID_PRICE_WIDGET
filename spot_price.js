@@ -398,6 +398,10 @@ var ALERTS = {
       widget.backgroundColor = COLORS.bg;
       widget.setPadding(WIDGET_PADDING, WIDGET_PADDING, WIDGET_PADDING, WIDGET_PADDING);
       
+      // Make widget tappable to refresh
+      var scriptName = Script.name();
+      widget.url = 'scriptable:///run?scriptName=' + encodeURIComponent(scriptName);
+      
       // Create card container
       var cardContainer = widget.addStack();
       cardContainer.backgroundColor = COLORS.card;

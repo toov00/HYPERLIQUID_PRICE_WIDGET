@@ -14,6 +14,7 @@ Connects directly to Hyperliquid's public API to fetch and display the current s
 - Last update timestamp showing when the data was fetched
 - Price alert notifications when price crosses configured thresholds
 - 24-hour change alerts for significant price movements
+- Tap to refresh manually for instant data updates
 - Clean card-based layout with rounded corners and subtle background contrast
 - Fully customizable colors and styling through configuration variables
 
@@ -47,7 +48,7 @@ If you plan to use alert notifications, make sure Scriptable has notification pe
 
 ## Usage
 
-After installation, the widget will automatically update every 15 minutes or so. To manually refresh, open the script in Scriptable and run it.
+After installation, the widget will automatically update every 15 minutes or so. You can manually refresh the widget by tapping on it, which will open Scriptable and run the script to fetch fresh data.
 
 The widget displays the current HYPE/USDC spot price, 24-hour change percentage, and last update time. All data is fetched from Hyperliquid's public API with no authentication required.
 
