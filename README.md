@@ -12,6 +12,8 @@ Connects directly to Hyperliquid's public API to fetch and display the current s
 - Current HYPE/USDC spot price with four decimal precision
 - 24-hour price change percentage with color-coded indicators (green for positive, red for negative)
 - Last update timestamp showing when the data was fetched
+- Price alert notifications when price crosses configured thresholds
+- 24-hour change alerts for significant price movements
 - Clean card-based layout with rounded corners and subtle background contrast
 - Fully customizable colors and styling through configuration variables
 
@@ -39,11 +41,17 @@ The widget updates automatically according to iOS scheduling (typically every 15
 
 The widget should now appear on your home screen and begin fetching data.
 
+**Notification Permissions:**
+
+If you plan to use alert notifications, make sure Scriptable has notification permissions enabled. The first time the widget sends a notification, iOS will prompt you to allow notifications. Grant permission to receive price alerts.
+
 ## Usage
 
 After installation, the widget will automatically update every 15 minutes or so. To manually refresh, open the script in Scriptable and run it.
 
 The widget displays the current HYPE/USDC spot price, 24-hour change percentage, and last update time. All data is fetched from Hyperliquid's public API with no authentication required.
+
+If alerts are enabled, the widget will send iOS notifications when price thresholds are crossed or when significant 24-hour price changes occur. Notifications respect a cooldown period to prevent spam.
 
 ## Configuration
 
@@ -95,7 +103,38 @@ var USE_CARD_LAYOUT = true;   // Card layout is currently enabled
 
 The card layout wraps all content in a white rounded rectangle with padding. The gradient background option is available but currently disabled in favor of a solid background color.
 
-**4. Tracking Other Spot Pairs**
+**4. Alert Configuration**
+
+The widget includes a notification system for price alerts. Configure alerts at the top of the script:
+
+```javascript
+var ALERTS = {
+  enabled: true,                    // Master switch for all alerts
+  
+  // Price threshold alerts
+  priceAlerts: {
+    enabled: true,
+    upperThreshold: 30.00,          // Alert when price goes ABOVE this
+    lowerThreshold: 20.00,          // Alert when price goes BELOW this
+  },
+  
+  // 24-hour change alerts
+  changeAlerts: {
+    enabled: true,
+    positivePercent: 10,            // Alert if price up more than 10%
+    negativePercent: -10            // Alert if price down more than 10%
+  },
+  
+  // Cooldown to prevent spam (minutes)
+  cooldownMinutes: 15
+};
+```
+
+Set `enabled: false` to disable all alerts, or disable individual alert types by setting their `enabled` property to `false`. Adjust the threshold values to match your desired price levels and change percentages. The cooldown prevents multiple notifications within the specified time period.
+
+When alerts are enabled, the widget displays the current alert status in the widget itself, showing whether the price is above, below, or within the configured threshold range.
+
+**5. Tracking Other Spot Pairs**
 
 While this widget is configured for HYPE/USDC, you can modify it to track other spot pairs on Hyperliquid:
 
