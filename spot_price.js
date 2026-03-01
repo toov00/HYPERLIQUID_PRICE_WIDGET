@@ -13,8 +13,8 @@ var ALERTS = {
   
   changeAlerts: {
     enabled: true,
-    positivePercent: 10,            // Alerts if price goes up by more than 10%
-    negativePercent: -10            // Alerts if price goes down by more than 10%
+    upperThreshold: 10,            // Alerts if price goes up by more than 10%
+    lowerThreshold: -10            // Alerts if price goes down by more than 10%
   },
   
   cooldownMinutes: 15
@@ -243,7 +243,7 @@ function check24hChangeAlerts(change) {
   
   var lastAlertType = loadData(STORAGE_KEYS.lastAlertType);
   
-  if (change >= ALERTS.changeAlerts.positivePercent) {
+  if (change >= ALERTS.changeAlerts.upperThreshold) {
     if (lastAlertType !== 'change_positive') {
       sendNotification(
         'HYPE 24h Surge!',
@@ -251,7 +251,7 @@ function check24hChangeAlerts(change) {
       );
       saveData(STORAGE_KEYS.lastAlertType, 'change_positive');
     }
-  } else if (change <= ALERTS.changeAlerts.negativePercent) {
+  } else if (change <= ALERTS.changeAlerts.lowerThreshold) {
     if (lastAlertType !== 'change_negative') {
       sendNotification(
         'HYPE 24h Drop Alert',

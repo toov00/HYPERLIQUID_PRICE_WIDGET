@@ -93,21 +93,18 @@ The widget includes a notification system for price alerts. Configure alerts at 
 var ALERTS = {
   enabled: true,                    // Master switch for all alerts
   
-  // Price threshold alerts
   priceAlerts: {
     enabled: true,
     upperThreshold: 30.00,          // Alerts when price goes above this
     lowerThreshold: 20.00,          // Alerts when price goes below this
   },
   
-  // 24-hour change alerts
   changeAlerts: {
     enabled: true,
     positivePercent: 10,            // Alerts if price goes up by more than 10%
     negativePercent: -10            // Alerts if price goes down by more than 10%
   },
   
-  // Cooldown to prevent spam (minutes)
   cooldownMinutes: 15
 };
 ```
