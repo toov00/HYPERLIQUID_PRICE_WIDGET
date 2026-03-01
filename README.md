@@ -15,7 +15,7 @@ Connects directly to Hyperliquid's public API to fetch and display the current s
 - Price alert notifications when price crosses configured thresholds (so you don't have to keep looking at the screen!)
 - 24-hour change alerts for significant price movements
 - Tap to refresh manually for instant data updates
-- Fully customizable colors and styling through configuration variables
+- Customizable colors, styling, and alerts through configuration variables
 
 The widget updates automatically according to iOS scheduling (typically every 15 minutes), and you can manually refresh by opening the script in Scriptable. All data is fetched from public endpoints with no authentication required.
 
@@ -114,15 +114,15 @@ var ALERTS = {
   // Price threshold alerts
   priceAlerts: {
     enabled: true,
-    upperThreshold: 30.00,          // Alert when price goes ABOVE this
-    lowerThreshold: 20.00,          // Alert when price goes BELOW this
+    upperThreshold: 30.00,          // Alerts when price goes above this
+    lowerThreshold: 20.00,          // Alerts when price goes below this
   },
   
   // 24-hour change alerts
   changeAlerts: {
     enabled: true,
-    positivePercent: 10,            // Alert if price up more than 10%
-    negativePercent: -10            // Alert if price down more than 10%
+    positivePercent: 10,            // Alerts if price goes up by more than 10%
+    negativePercent: -10            // Alerts if price goes down by more than 10%
   },
   
   // Cooldown to prevent spam (minutes)
@@ -150,25 +150,23 @@ Some pairs may use different formats. For example, PURR/USDC uses the string ide
 
 **1. Update Frequency**
 
-iOS controls when widgets refresh. The system typically updates widgets every 15 minutes or so, but this isn't guaranteed. You can't force more frequent updates from within the widget itself.
+iOS controls when widgets refresh. The system typically updates widgets every 15 minutes or so in an automated fashion, but this is not guaranteed. 
+
+That said, the widget can be refreshed manually by tapping it. This bypasses iOS scheduling and fetches fresh data immediately.
 
 **2. No Real-Time Updates**
 
-This is an iOS limitation, not a limitation of the widget code. For truly real-time price data, you'd need to use the Hyperliquid web app or mobile app directly.
+This is an iOS limitation, not a limitation of the widget code. For truly real-time price data, there is a need to use the Hyperliquid web app directly.
 
-**3. Manual Refresh**
+**3. Network Dependency**
 
-You can manually refresh the widget by opening the script in Scriptable and running it. This bypasses iOS scheduling and fetches fresh data immediately.
-
-**4. Network Dependency**
-
-The widget requires an active internet connection to fetch data. If you're offline, it will display "N/A" for the price.
+The widget requires an active internet connection to fetch data. When offline, it will display "N/A" for the price.
 
 ## Troubleshooting
 
 **1. Widget Shows "N/A" for Price**
 
-This usually means the widget couldn't fetch data from the API. Common causes:
+This usually means the widget is not able to fetch data from the API. Common causes:
 - No internet connection
 - Hyperliquid API is temporarily unavailable
 - Network timeout
@@ -179,20 +177,19 @@ Try running the script directly in Scriptable to see if there are any error mess
 
 iOS controls widget refresh timing. If your widget seems stale:
 - Wait for the next automatic refresh (can take 15+ minutes)
-- Manually refresh by opening the script in Scriptable
-- Remove and re-add the widget to force a refresh
+- Manually refresh by tapping the widget
 
 **3. Syntax Errors When Pasting Code**
 
 If you encounter syntax errors:
-- Make sure you're copying the entire file contents
+- Make sure that the entire file contents are copied (and not inadvertently truncated)
 - Create a fresh script rather than editing an existing one
 - Check for any hidden formatting characters that might have been copied
-- Verify the file encoding is correct
+- Verify that the file encoding is correct
 
 ## Contributing
 
-Contributions are welcome. If you find bugs, have feature suggestions, or want to improve the code, feel free to open an issue or submit a pull request.
+Contributions are welcome! If you find bugs, have feature suggestions, or want to improve the code, feel free to open an issue or submit a pull request.
 
 When contributing, please:
 - Test your changes in Scriptable before submitting
