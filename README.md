@@ -1,21 +1,21 @@
 # HYPE/USDC Spot Price Widget
 
-An iOS widget that displays real-time HYPE/USDC spot prices from Hyperliquid's Layer 1. Built with Scriptable for easy customization and deployment.
+An iOS widget that displays real-time HYPE/USDC spot prices from Hyperliquid's Layer 1. Built with Scriptable.
 
 <img src="preview.png" width="200px">
 
 ## What It Does
 
-Connects directly to Hyperliquid's public API to fetch and display the current spot price for HYPE/USDC. The design features a clean, minimal interface with a white rounded card on a darker background that fits naturally on your home screen.
+Connects directly to Hyperliquid's public API to fetch and display the current spot price for HYPE/USDC. The interface is clean and minimal (to soothe your frustrations as you trade 🙃).
 
 **Features:**
 - Current HYPE/USDC spot price with four decimal precision
 - 24-hour price change percentage with color-coded indicators (green for positive, red for negative)
 - Last update timestamp showing when the data was fetched
-- Price alert notifications when price crosses configured thresholds
+- Price alert notifications when price crosses configured thresholds (so you don't have to keep looking at the screen!)
 - 24-hour change alerts for significant price movements
 - Tap to refresh manually for instant data updates
-- Clean card-based layout with rounded corners and subtle background contrast
+- Clean card-based layout
 - Fully customizable colors and styling through configuration variables
 
 The widget updates automatically according to iOS scheduling (typically every 15 minutes), and you can manually refresh by opening the script in Scriptable. All data is fetched from public endpoints with no authentication required.
