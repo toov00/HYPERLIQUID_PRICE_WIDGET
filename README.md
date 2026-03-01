@@ -190,13 +190,6 @@ If you encounter syntax errors:
 - Check for any hidden formatting characters that might have been copied
 - Verify the file encoding is correct
 
-**4. Colors Not Displaying Correctly**
-
-If colors appear wrong or hard to read:
-- Check that the hex color values are properly formatted
-- Ensure there's sufficient contrast between text and background colors
-- The current palette uses a brownish dark gray background with light gray text for optimal contrast
-
 ## Contributing
 
 Contributions are welcome. If you find bugs, have feature suggestions, or want to improve the code, feel free to open an issue or submit a pull request.
