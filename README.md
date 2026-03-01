@@ -76,25 +76,7 @@ var COLORS = {
 
 Adjust these hex values to match your preferred color scheme.
 
-**2. Custom Logo or Image**
-
-The widget supports custom images for branding. Configure it using one of these methods:
-
-Method 1: Remote Image URL
-
-```javascript
-var CUSTOM_IMAGE_URL = 'https://your-domain.com/logo.png';
-```
-
-Method 2: Local Image File
-
-```javascript
-var CUSTOM_IMAGE_LOCAL = 'logo.png';
-```
-
-Save your image file to Scriptable's iCloud folder (accessible through the Files app). The widget will attempt to load the image if configured, falling back gracefully if the image cannot be loaded.
-
-**3. Layout Options**
+**2. Layout Options**
 
 ```javascript
 var USE_GRADIENT_BG = false;  // Set to true for gradient backgrounds
@@ -103,7 +85,7 @@ var USE_CARD_LAYOUT = true;   // Card layout is currently enabled
 
 The card layout wraps all content in a white rounded rectangle with padding. The gradient background option is available but currently disabled in favor of a solid background color.
 
-**4. Alert Configuration**
+**3. Alert Configuration**
 
 The widget includes a notification system for price alerts. Configure alerts at the top of the script:
 
@@ -133,18 +115,6 @@ var ALERTS = {
 Set `enabled: false` to disable all alerts, or disable individual alert types by setting their `enabled` property to `false`. Adjust the threshold values to match your desired price levels and change percentages. The cooldown prevents multiple notifications within the specified time period.
 
 When alerts are enabled, the widget displays the current alert status in the widget itself, showing whether the price is above, below, or within the configured threshold range.
-
-**5. Tracking Other Spot Pairs**
-
-While this widget is configured for HYPE/USDC, you can modify it to track other spot pairs on Hyperliquid:
-
-```javascript
-var HYPE_PAIR_ID = '@107';
-```
-
-HYPE/USDC uses the identifier `@107` on mainnet. To find other pairs, check Hyperliquid's spot metadata endpoint and look for the index number associated with your desired trading pair. Replace the `HYPE_PAIR_ID` value in the script with the appropriate identifier.
-
-Some pairs may use different formats. For example, PURR/USDC uses the string identifier `PURR/USDC` rather than an index-based format. You'll also need to update the `SPOT_PAIRS` object if you want to track multiple pairs.
 
 ## Limitations
 
