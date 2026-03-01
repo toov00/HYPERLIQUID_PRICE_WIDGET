@@ -15,7 +15,7 @@ Connects directly to Hyperliquid's public API to fetch and display the current s
 - Price alert notifications when price crosses configured thresholds (so you don't have to keep looking at the screen!)
 - 24-hour change alerts for significant price movements
 - Tap to refresh manually for instant data updates
-- Customizable colors, styling, and alerts through configuration variables
+- Customizable colors, styling, tracking and alerts through configuration variables
 
 The widget updates automatically according to iOS scheduling (typically every 15 minutes), and you can manually refresh by opening the script in Scriptable. All data is fetched from public endpoints with no authentication required.
 
