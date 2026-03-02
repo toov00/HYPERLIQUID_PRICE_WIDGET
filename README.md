@@ -2,7 +2,7 @@
 
 An iOS widget that displays real-time HYPE/USDC spot prices from Hyperliquid's Layer 1. Built with Scriptable.
 
-<img src="preview.png" width="200px">
+<img src="assets/preview.png" width="200px">
 
 ## What It Does
 
