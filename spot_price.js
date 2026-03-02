@@ -5,13 +5,13 @@
 var ALERTS = {
   enabled: true,                    // Master switch for all alerts
   
-  priceAlerts: {
+  rawBoundaryAlerts: {
     enabled: true,
     upperThreshold: 30.00,          // Alerts when price goes above this
     lowerThreshold: 20.00           // Alerts when price goes below this
   },
   
-  changeAlerts: {
+  percentageChangeAlerts: {
     enabled: true,
     upperThreshold: 10,            // Alerts if price goes up by more than 10%
     lowerThreshold: -10            // Alerts if price goes down by more than 10%
@@ -63,6 +63,8 @@ var STORAGE_KEYS = {
   lastAlertPrice: 'hype_last_alert_price'
 };
 
+var INVALID_TIME = 999;
+
 // ============================================================================
 // STORAGE FUNCTIONS
 // ============================================================================
@@ -102,10 +104,10 @@ function getTimeSinceLastAlert() {
       var minutesSince = (Date.now() - lastTime) / (1000 * 60);
       return minutesSince;
     } catch (error) {
-      return 999; 
+      return INVALID_TIME; 
     }
   }
-  return 999; 
+  return INVALID_TIME; 
 }
 
 // ============================================================================
@@ -192,7 +194,7 @@ function sendNotification(title, body) {
 }
 
 function checkPriceAlerts(currentPrice) {
-  if (!ALERTS.enabled || !ALERTS.priceAlerts.enabled || currentPrice === null) {
+  if (!ALERTS.enabled || !ALERTS.rawBoundaryAlerts.enabled || currentPrice === null) {
     return;
   }
   
@@ -205,23 +207,23 @@ function checkPriceAlerts(currentPrice) {
   var lastAlertType = loadData(STORAGE_KEYS.lastAlertType);
   var lastAlertPrice = loadData(STORAGE_KEYS.lastAlertPrice);
   
-  if (currentPrice >= ALERTS.priceAlerts.upperThreshold) {
-    if (lastAlertType !== 'upper' || lastAlertPrice !== ALERTS.priceAlerts.upperThreshold) {
+  if (currentPrice >= ALERTS.rawBoundaryAlerts.upperThreshold) {
+    if (lastAlertType !== 'upper' || lastAlertPrice !== ALERTS.rawBoundaryAlerts.upperThreshold) {
       sendNotification(
         'HYPE Price Alert: Above Threshold!',
-        'HYPE reached $' + currentPrice.toFixed(4) + ' (above $' + ALERTS.priceAlerts.upperThreshold.toFixed(2) + ' threshold)'
+        'HYPE reached $' + currentPrice.toFixed(4) + ' (above $' + ALERTS.rawBoundaryAlerts.upperThreshold.toFixed(2) + ' threshold)'
       );
       saveData(STORAGE_KEYS.lastAlertType, 'upper');
-      saveData(STORAGE_KEYS.lastAlertPrice, ALERTS.priceAlerts.upperThreshold);
+      saveData(STORAGE_KEYS.lastAlertPrice, ALERTS.rawBoundaryAlerts.upperThreshold);
     }
-  } else if (currentPrice <= ALERTS.priceAlerts.lowerThreshold) {
-    if (lastAlertType !== 'lower' || lastAlertPrice !== ALERTS.priceAlerts.lowerThreshold) {
+  } else if (currentPrice <= ALERTS.rawBoundaryAlerts.lowerThreshold) {
+    if (lastAlertType !== 'lower' || lastAlertPrice !== ALERTS.rawBoundaryAlerts.lowerThreshold) {
       sendNotification(
         'HYPE Price Alert: Below Threshold!',
-        'HYPE dropped to $' + currentPrice.toFixed(4) + ' (below $' + ALERTS.priceAlerts.lowerThreshold.toFixed(2) + ' threshold)'
+        'HYPE dropped to $' + currentPrice.toFixed(4) + ' (below $' + ALERTS.rawBoundaryAlerts.lowerThreshold.toFixed(2) + ' threshold)'
       );
       saveData(STORAGE_KEYS.lastAlertType, 'lower');
-      saveData(STORAGE_KEYS.lastAlertPrice, ALERTS.priceAlerts.lowerThreshold);
+      saveData(STORAGE_KEYS.lastAlertPrice, ALERTS.rawBoundaryAlerts.lowerThreshold);
     }
   } else {
     if (lastAlertType !== 'normal') {
@@ -232,7 +234,7 @@ function checkPriceAlerts(currentPrice) {
 }
 
 function check24hChangeAlerts(change) {
-  if (!ALERTS.enabled || !ALERTS.changeAlerts.enabled || change === null) {
+  if (!ALERTS.enabled || !ALERTS.percentageChangeAlerts.enabled || change === null) {
     return;
   }
   
@@ -243,19 +245,19 @@ function check24hChangeAlerts(change) {
   
   var lastAlertType = loadData(STORAGE_KEYS.lastAlertType);
   
-  if (change >= ALERTS.changeAlerts.upperThreshold) {
+  if (change >= ALERTS.percentageChangeAlerts.upperThreshold) {
     if (lastAlertType !== 'change_positive') {
       sendNotification(
-        'HYPE 24h Surge!',
-        'HYPE is up ' + change.toFixed(2) + '% in the last 24 hours!'
+        'HYPE SURGE ALERT!',
+        'HYPE IS UP ' + change.toFixed(2) + '% IN THE LAST 24 HOURS!'
       );
       saveData(STORAGE_KEYS.lastAlertType, 'change_positive');
     }
-  } else if (change <= ALERTS.changeAlerts.lowerThreshold) {
+  } else if (change <= ALERTS.percentageChangeAlerts.lowerThreshold) {
     if (lastAlertType !== 'change_negative') {
       sendNotification(
-        'HYPE 24h Drop Alert',
-        'HYPE is down ' + Math.abs(change).toFixed(2) + '% in the last 24 hours'
+        'HYPE DROP ALERT!',
+        'HYPE IS DOWN ' + Math.abs(change).toFixed(2) + '% IN THE LAST 24 HOURS'
       );
       saveData(STORAGE_KEYS.lastAlertType, 'change_negative');
     }
