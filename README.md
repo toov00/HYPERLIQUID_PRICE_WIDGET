@@ -1,27 +1,21 @@
 # HYPE/USDC Spot Price Widget
 
-An iOS widget that displays real-time HYPE/USDC spot prices from Hyperliquid's Layer 1. Built with Scriptable.
+An iOS widget that displays HYPE/USDC spot prices from Hyperliquid's Layer 1. Built with Scriptable.
 
 <img src="assets/preview.png" width="200px">
 
 ## What It Does
 
-Connects directly to Hyperliquid's public API to fetch and display the current spot price for HYPE/USDC. The interface is clean and minimal (to soothe your frustrations as you trade 🙃).
+This widget connects directly to Hyperliquid's public API to fetch and display the current spot price for HYPE/USDC. It updates automatically according to iOS scheduling (typically every 15 minutes), but you can manually refresh it with a single tap. All data is fetched from public endpoints with no authentication required.
 
-**Features:**
-- Current HYPE/USDC spot price with four decimal precision
-- 24-hour price change percentage with color-coded indicators (green for positive, red for negative)
-- Last update timestamp showing when the data was fetched
-- Price alert notifications when price crosses configured thresholds (so you don't have to keep looking at the screen!)
-- 24-hour change alerts for significant price movements
-- Tap to refresh manually for instant data updates
-- Customizable colors, styling, tracking and alerts through configuration variables
-
-The widget updates automatically according to iOS scheduling (typically every 15 minutes), and you can manually refresh by opening the script in Scriptable. All data is fetched from public endpoints with no authentication required.
+**Notable Features:**
+- HYPE/USDC spot price with four decimal precision
+- 24-hour price change percentage 
+- Configurable price alert notifications 
 
 ## Installation
 
-**Requirements:** iPhone running iOS 14+ and the Scriptable app (free from App Store)
+**Requirements:** Scriptable && iOS 15.5 or later
 
 1. Download and install Scriptable from the App Store
 2. Open Scriptable and tap the plus button to create a new script
@@ -55,37 +49,7 @@ If alerts are enabled, the widget will send iOS notifications when price thresho
 
 ## Configuration
 
-The widget is highly customizable through variables defined at the top of the script file. You can modify colors, enable or disable features, and configure custom branding.
-
-**1. Color Customization**
-
-The color palette is defined in the `COLORS` object at the top of the script:
-
-```javascript
-var COLORS = {
-  'bg': new Color('#544C4A'),           // Brownish dark gray background
-  'card': new Color('#FFFFFF'),         // White card
-  'green': new Color('#059669'),         // Green for positive changes
-  'red': new Color('#DC2626'),          // Red for negative changes
-  'text': new Color('#D3D3D3'),         // Light gray text
-  'accent': new Color('#E5E7EB'),       // Light gray accent
-  'price': new Color('#544C4A'),         // Brownish dark gray for price
-  'secondary': new Color('#D3D3D3')     // Light gray for secondary text
-};
-```
-
-Adjust these hex values to match your preferred color scheme.
-
-**2. Layout Options**
-
-```javascript
-var USE_GRADIENT_BG = false;  // Set to true for gradient backgrounds
-var USE_CARD_LAYOUT = true;   // Card layout is currently enabled
-```
-
-The card layout wraps all content in a white rounded rectangle with padding. The gradient background option is available but currently disabled in favor of a solid background color.
-
-**3. Alert Configuration**
+**1. Alert Configuration**
 
 The widget includes a notification system for price alerts. Configure alerts at the top of the script:
 
@@ -111,7 +75,31 @@ var ALERTS = {
 
 Set `enabled: false` to disable all alerts, or disable individual alert types by setting their `enabled` property to `false`. Adjust the threshold values to match your desired price levels and change percentages. The cooldown prevents multiple notifications within the specified time period.
 
-When alerts are enabled, the widget displays the current alert status in the widget itself, showing whether the price is above, below, or within the configured threshold range.
+**2. Color Customization**
+
+```javascript
+var COLORS = {
+  'bg': new Color('#544C4A'),           // Brownish dark gray background
+  'card': new Color('#FFFFFF'),         // White card
+  'green': new Color('#059669'),         // Green for positive changes
+  'red': new Color('#DC2626'),          // Red for negative changes
+  'text': new Color('#D3D3D3'),         // Light gray text
+  'accent': new Color('#E5E7EB'),       // Light gray accent
+  'price': new Color('#544C4A'),         // Brownish dark gray for price
+  'secondary': new Color('#D3D3D3')     // Light gray for secondary text
+};
+```
+
+Adjust these hex values to match your preferred color scheme.
+
+**3. Layout Options**
+
+```javascript
+var USE_GRADIENT_BG = false;  // Set to true for gradient backgrounds
+var USE_CARD_LAYOUT = true;   // Card layout is currently enabled
+```
+
+The card layout wraps all content in a white rounded rectangle with padding. The gradient background option is available but currently disabled in favor of a solid background color.
 
 ## Limitations
 
@@ -129,31 +117,6 @@ This is an iOS limitation, not a limitation of the widget code. For truly real-t
 
 The widget requires an active internet connection to fetch data. When offline, it will display "N/A" for the price.
 
-## Troubleshooting
-
-**1. Widget Shows "N/A" for Price**
-
-This usually means the widget is not able to fetch data from the API. Common causes:
-- No internet connection
-- Hyperliquid API is temporarily unavailable
-- Network timeout
-
-Try running the script directly in Scriptable to see if there are any error messages. Check your internet connection and try again.
-
-**2. Widget Not Updating**
-
-iOS controls widget refresh timing. If your widget seems stale:
-- Wait for the next automatic refresh (can take 15+ minutes)
-- Manually refresh by tapping the widget
-
-**3. Syntax Errors When Pasting Code**
-
-If you encounter syntax errors:
-- Make sure that the entire file contents are copied (and not inadvertently truncated)
-- Create a fresh script rather than editing an existing one
-- Check for any hidden formatting characters that might have been copied
-- Verify that the file encoding is correct
-
 ## Contributing
 
 Contributions are welcome! If you find bugs, have feature suggestions, or want to improve the code, feel free to open an issue or submit a pull request.
@@ -169,7 +132,7 @@ MIT License
 
 ## Disclaimer
 
-This widget is an independent project and is not affiliated with, endorsed by, or associated with Hyperliquid. Use at your own risk. Always verify prices and trading information on the official Hyperliquid platform before making any trading decisions. The authors and contributors are not responsible for any losses or damages resulting from the use of this widget.
+This widget, born out of my own interest, is not affiliated with, endorsed by, or associated with Hyperliquid. Use at your own risk. Always verify prices and trading information on the official Hyperliquid platform before making any trading decisions. The author and contributors are not responsible for any losses or damages resulting from the use of this widget.
 
 ## Resources
 
