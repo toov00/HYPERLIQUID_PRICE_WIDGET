@@ -25,13 +25,13 @@ var ALERTS = {
 // ============================================================================
 
 var COLORS = {
-  'bg': new Color('#544C4A'),           // Brownish dark gray background
+  'bg': new Color('#544C4A'),           // Dark gray background
   'card': new Color('#FFFFFF'),         // White card
   'green': new Color('#059669'),         // Green for positive changes
   'red': new Color('#DC2626'),          // Red for negative changes
   'text': new Color('#D3D3D3'),         // Light gray text
   'accent': new Color('#E5E7EB'),       // Light gray accent
-  'price': new Color('#544C4A'),         // Brownish dark gray for price
+  'price': new Color('#544C4A'),         // Dark gray for price
   'secondary': new Color('#D3D3D3')     // Light gray for secondary text
 };
 
