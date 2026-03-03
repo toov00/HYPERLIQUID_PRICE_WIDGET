@@ -1,5 +1,5 @@
 // ============================================================================
-// NOTIFICATION CONFIGURATION: CUSTOMIZE YOUR ALERTS HERE
+// ALERT CONFIGURATION: CUSTOMIZE THE ALERTS HERE
 // ============================================================================
 
 var ALERTS = {
@@ -21,7 +21,7 @@ var ALERTS = {
 };
 
 // ============================================================================
-// STYLING CONFIGURATION: CUSTOMIZE THE INTERFACE HERE
+// STYLING CONFIGURATION: CUSTOMIZE THE INTERFACE (COLORS, LAYOUT, ETC.) HERE
 // ============================================================================
 
 var COLORS = {
@@ -39,15 +39,15 @@ var COLORS = {
 var USE_GRADIENT_BG = false;
 var USE_CARD_LAYOUT = true;
 
+// ============================================================================
+// OTHER GLOBAL VARIABLES
+// ============================================================================
+
 // Widget styling constants
 var CARD_CORNER_RADIUS = 16;
 var CARD_PADDING = 16;
 var WIDGET_PADDING = 12;
 var CONTENT_SPACING = 8;
-
-// ============================================================================
-// OTHER GLOBAL VARIABLES
-// ============================================================================
 
 var API_BASE_URL = 'https://api.hyperliquid.xyz/info';
 var HYPE_PAIR_ID = '@107';
